@@ -1,10 +1,27 @@
 <?php
-$controller = isset($_GET['c']) ? $_GET['c'] : 'siakad';
-$method = isset($_GET['m']) ? $_GET['m'] : 'index';
+//konfigurasi
+$hostDB		= "localhost";
+$usernameDB = "root";
+$passwordDB = "";
+$namaDB		= "smkn_glagah";
 
-require 'controller/'.$controller.'.php';
+//koneksi ke database
+$con = mysqli_connect($hostDB,$usernameDB,$passwordDB,$namaDB);
 
-$obj_controller = new $controller;
+//cek koneksi
+if(mysqli_connect_errno())
+{
+	echo "KONEKSI GAGAL";
+	die;
+}
 
-call_user_func_array(array($obj_controller, $method), array());
+//akses database
+include("models/database.php");
+
+//MEMANGGIL DATABASE
+$database = new database;
+
+//akses controllers
+include("controllers/controllers.php");
+
 ?>
